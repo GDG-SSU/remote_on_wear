@@ -1,4 +1,4 @@
-# remote_on_wear
+# Remote on wear
 2015 LG Wearable Hackathon
 
 ###Project Intro.
