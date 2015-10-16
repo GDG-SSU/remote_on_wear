@@ -1,5 +1,5 @@
 # Remote on wear
-Projected By. Kyeongwan Kang / Ace Kim / Nana Kim
+[2015 LG Wearable Hackathon](http://onoffmix.com/event/53466) / Projected By. Kyeongwan Kang / Ace Kim / Nana Kim
 
 ###Project Intro.
 Remote on Wear는 가정의 다양한 가전기기들을 매우 심플한 컨트롤 UI의 웨어러블로 컨트롤하기 위한 애플리케이션 입니다. Remote on Wear의 유저는 집안에 에어컨, TV, 셋톱박스, 냉장고 등 어느 가정에나 있을법한 가전들을 소유하고있으며, 스마트폰과 연동되는 Android Wear 기반의 웨어러블 디바이스를 가진 사람들이 사용 가능한 제품입니다.
