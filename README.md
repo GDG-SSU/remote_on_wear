@@ -14,12 +14,12 @@ Remote on Wear는 가정의 다양한 가전기기들을 매우 심플한 컨트
 ###Use API
 ####RowClient
 minSdk : 4.0.3 - ICS / targetSdk : 6.0 - Marshmallow
-- Android Wearable SDK ([UI](https://developer.android.com/intl/ko/training/wearables/ui/index.html) / [Voice Capabilities](https://developer.android.com/intl/ko/training/wearables/apps/voice.html))
+- Android Wearable SDK : ([UI](https://developer.android.com/intl/ko/training/wearables/ui/index.html) / [Voice Capabilities](https://developer.android.com/intl/ko/training/wearables/apps/voice.html))
 - [WIFI Direct](http://developer.android.com/intl/ko/training/connect-devices-wirelessly/wifi-direct.html) ([N:1 연결이 가능합니다](https://www.youtube.com/watch?v=6emgRvH4mTo&list=UUQmz9albYeqArJvmpmaQpGQ&index=1&feature=plcp))
 
 ####RowIRSender (리시버와 서비스를 사용합니다. 액티비티를 비롯한 UI요소는 필요하지 않습니다.)
 minSdk : 4.4 - Kitkat / targetSdk : 6.0 - Marshmallow
-- IR API [LG QRemote](http://developer.lge.com/resource/mobile/RetrieveDocDevLibrary.dev)
+- IR API : [LG QRemote](http://developer.lge.com/resource/mobile/RetrieveDocDevLibrary.dev)
 - [WIFI Direct](http://developer.android.com/intl/ko/training/connect-devices-wirelessly/wifi-direct.html)
 
 ####UI (Wearable Device)
