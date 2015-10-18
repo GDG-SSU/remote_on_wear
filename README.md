@@ -15,8 +15,9 @@ Remote on Wear는 가정의 다양한 가전기기들을 매우 심플한 컨트
 ####RowClient
 minSdk : 4.0.3 - ICS / targetSdk : 6.0 - Marshmallow
 - Android Wearable SDK : ([UI](https://developer.android.com/intl/ko/training/wearables/ui/index.html) / [Voice Capabilities](https://developer.android.com/intl/ko/training/wearables/apps/voice.html) / [Sending and Syncing Data](https://developer.android.com/intl/ko/training/wearables/data-layer/index.html))
-- IR API : [LG QRemote](http://developer.lge.com/resource/mobile/RetrieveDocDevLibrary.dev) [(QRemote SDK에 대한 정리를 진행한 위키입니다 참고하세요)](https://github.com/GDG-SSU/remote_on_wear/wiki/QRemote-SDK-%EC%98%88%EC%A0%9C-%EB%B6%84%EC%84%9D-%EB%B0%8F-SDK-%EC%82%AC%EC%9A%A9%EB%B2%95)
 
-####~~RowIRSender~~(QRemote SDK를 살펴보면서 효용성이 사라졌습니다.)
+####RowIRSender (리시버와 서비스를 사용합니다. 액티비티를 비롯한 UI요소는 필요하지 않습니다.)		
+-minSdk : 4.4 - Kitkat / targetSdk : 6.0 - Marshmallow		
+ - IR API : [LG QRemote](http://developer.lge.com/resource/mobile/RetrieveDocDevLibrary.dev) [(QRemote SDK에 대한 정리를 진행한 위키입니다 참고하세요)](https://github.com/GDG-SSU/remote_on_wear/wiki/QRemote-SDK-%EC%98%88%EC%A0%9C-%EB%B6%84%EC%84%9D-%EB%B0%8F-SDK-%EC%82%AC%EC%9A%A9%EB%B2%95)
 
 ####UI (Wearable Device)
