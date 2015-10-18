@@ -17,6 +17,6 @@ minSdk : 4.0.3 - ICS / targetSdk : 6.0 - Marshmallow
 - Android Wearable SDK : ([UI](https://developer.android.com/intl/ko/training/wearables/ui/index.html) / [Voice Capabilities](https://developer.android.com/intl/ko/training/wearables/apps/voice.html))
 - IR API : [LG QRemote](http://developer.lge.com/resource/mobile/RetrieveDocDevLibrary.dev) [(QRemote SDK에 대한 정리를 진행한 위키입니다 참고하세요)](https://github.com/GDG-SSU/remote_on_wear/wiki/QRemote-SDK-%EC%98%88%EC%A0%9C-%EB%B6%84%EC%84%9D-%EB%B0%8F-SDK-%EC%82%AC%EC%9A%A9%EB%B2%95)
 
-~~RowIRSender~~(QRemote SDK를 살펴보면서 효용성이 사라졌습니다.)
+####~~RowIRSender~~(QRemote SDK를 살펴보면서 효용성이 사라졌습니다.)
 
 ####UI (Wearable Device)
