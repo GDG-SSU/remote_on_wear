@@ -13,6 +13,11 @@ import com.lge.hardware.IRBlaster.ResultCode;
 
 public class RowIRService extends Service implements SocketReceiveListener {
 
+    /**
+     * 이 애플리케이션에서 웨어러블의 명령을 기다리는 Thread를 생성하고,
+     * 그 명령을 IR 송신을 이용하여 수행하는 중심적인 역할을 담당합니다.
+     */
+
     private final static String TAG = RowIRService.class.getSimpleName();
     private IRBlaster mIR;
     private boolean mIR_ready = false;
@@ -22,11 +27,11 @@ public class RowIRService extends Service implements SocketReceiveListener {
         Log.i(TAG, "onStartCommand");
 
         mIR = IRBlaster.getIRBlaster(getApplicationContext(), mIrBlasterReadyCallback);
-        if (mIR == null){
+        if (mIR != null) {
+            new SocketReceiverThread().start();
+        } else {
             Log.e(TAG, "No IR Blaster in this device");
         }
-
-        new SocketReceiverThread().start();
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -66,7 +71,7 @@ public class RowIRService extends Service implements SocketReceiveListener {
 
         @Override
         public void failure(int i) {
-            Log.e(TAG, "Error: "+ ResultCode.getString(i));
+            Log.e(TAG, "Error: " + ResultCode.getString(i));
         }
     };
 }

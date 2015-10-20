@@ -6,6 +6,11 @@ import com.lge.hardware.IRBlaster.Device;
 import com.lge.hardware.IRBlaster.IRFunction;
 
 public class DeviceControlInfo {
+
+    /**
+     * 웨어러블로부터 전송받은 데이터를 파싱하며, 일시적으로 인스턴스를 통해 저장하여 활용하는 모델 클래스입니다
+     */
+
     public int deviceId;
     public String functionName;
     public String deviceName;
