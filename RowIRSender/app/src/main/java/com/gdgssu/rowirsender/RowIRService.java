@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-public class RowIRService extends Service {
+public class RowIRService extends Service implements SocketReceiveListener {
 
     private final static String TAG = RowIRService.class.getSimpleName();
 
@@ -24,5 +24,10 @@ public class RowIRService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onReceive(String message) {
+        //Todo : 소켓을 통해 메시지가 전달되었을 때 처리할 로직 작성
     }
 }

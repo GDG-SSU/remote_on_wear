@@ -11,6 +11,7 @@ import java.net.Socket;
 public class SocketReceiverThread extends Thread {
 
     private final static String TAG = SocketReceiverThread.class.getSimpleName();
+    private RowIRService service = new RowIRService();
 
     @Override
     public void run() {
@@ -21,6 +22,7 @@ public class SocketReceiverThread extends Thread {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String deliverMessage;
             deliverMessage=reader.readLine();
+            service.onReceive(deliverMessage);
 
         }catch (IOException e){
             Log.d(TAG, e.getMessage());
