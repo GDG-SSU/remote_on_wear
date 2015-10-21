@@ -12,6 +12,7 @@ import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
 import com.lge.hardware.IRBlaster.ResultCode;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RowIRService extends Service implements SocketReceiveListener {
@@ -36,18 +37,21 @@ public class RowIRService extends Service implements SocketReceiveListener {
         initInstance();
 
         if (mIR != null) {
-            deviceList = prefHelper.getDevicePref(DevicePreferenceHelper.PREF_DEVICE_STORE);
+            deviceList = Arrays.asList(mIR.getDevices());
+//            deviceList = prefHelper.getDevicePref(DevicePreferenceHelper.PREF_DEVICE_STORE);
             new SocketReceiverThread().start();
-        } else {
-            Log.e(TAG, "No IR Blaster in this device");
         }
 
         return super.onStartCommand(intent, flags, startId);
     }
 
     private void initInstance() {
-        mIR = IRBlaster.getIRBlaster(getApplicationContext(), mIrBlasterReadyCallback);
-        prefHelper = new DevicePreferenceHelper(getApplicationContext());
+        if (IRBlaster.isSdkSupported(getApplicationContext())) {
+            mIR = IRBlaster.getIRBlaster(getApplicationContext(), mIrBlasterReadyCallback);
+            prefHelper = new DevicePreferenceHelper(getApplicationContext());
+        } else {
+            Log.e(TAG, "No IR Blaster in this device");
+        }
     }
 
     @Nullable

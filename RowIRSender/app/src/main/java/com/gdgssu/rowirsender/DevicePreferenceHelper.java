@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 유저가 컨트롤할 Device(AIRCON, TV, STB, DVD 등)을 저장하고 저장된 내용을 가져오는 PrefenceHelper 클래스
+ * mIR.getDevices()를 이용해 애플리케이션을 완전히 종료하고 다시 실행해도 디바이스 목록을 가져올수있다면 이 클래스는 효용성이 없습니다
  */
 
 public class DevicePreferenceHelper {
