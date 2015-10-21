@@ -9,7 +9,7 @@ Remote on Wear는 가정의 다양한 가전기기들을 매우 심플한 컨트
 일단은 시범적으로 LG QRemote와 Android의 ConsumerIRManager를 이용해 LG 가전 단말을 컨트롤 하기위한 제품을 만드는 것을 첫 단추로 계획하고 있습니다.
 
 ###Project Structure
-![Project Structure](http://s4.postimg.org/6fxb0cmct/2015_10_16_3_12_21.png)
+![Project Structure](http://s4.postimg.org/y6xybshjx/2015_10_21_2_11_16.png)
 
 ###Use API
 ####RowClient
