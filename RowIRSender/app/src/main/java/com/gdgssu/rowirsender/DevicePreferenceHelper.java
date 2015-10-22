@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.lge.hardware.IRBlaster.Device;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

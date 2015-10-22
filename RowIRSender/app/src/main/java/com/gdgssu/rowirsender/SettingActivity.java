@@ -40,13 +40,13 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        if (IRBlaster.isSdkSupported(getApplicationContext())){
+        if (IRBlaster.isSdkSupported(getApplicationContext())) {
             mIR = IRBlaster.getIRBlaster(getApplicationContext(), mIrBlasterReadyCallBack);
-        }else{
+        } else {
             Log.e("TAG", "sdk not supported IR");
         }
 
-        Button addDeviceButton = (Button)findViewById(R.id.add_device);
+        Button addDeviceButton = (Button) findViewById(R.id.add_device);
 
         addDeviceButton.setOnClickListener(new View.OnClickListener() {
             @Override

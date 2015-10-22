@@ -62,7 +62,7 @@ public class RowIRService extends Service implements SocketReceiveListener {
 
     @Override
     public void onReceive(String message) {
-        //Todo : 소켓을 통해 메시지가 전달되었을 때 처리할 로직 작성
+          //Todo : 소켓을 통해 메시지가 전달되었을 때 처리할 로직 작성
         DeviceControlInfo deviceControlInfo = DeviceInfoParser.parsedInfo(message);
 
         int controlFunctionCode = deviceControlInfo.getFunctionKeyCode(deviceList, deviceControlInfo.getFunctionName());

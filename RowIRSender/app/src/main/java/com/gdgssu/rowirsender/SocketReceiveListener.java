@@ -8,5 +8,4 @@ public interface SocketReceiveListener {
      */
 
     void onReceive(String message);
-
 }
