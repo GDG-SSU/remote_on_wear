@@ -20,5 +20,7 @@ public class MainActivity extends Activity {
                 mTextView = (TextView) stub.findViewById(R.id.text);
             }
         });
+
+        new Thread(new ControlSendingThread(getApplicationContext())).start();
     }
 }
