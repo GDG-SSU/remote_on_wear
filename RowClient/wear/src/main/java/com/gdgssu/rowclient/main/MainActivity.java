@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WearableListView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gdgssu.rowclient.ControlSendingThread;
 import com.gdgssu.rowclient.R;
 
-import java.util.ArrayList;
-
 public class MainActivity extends Activity {
 
     private TextView mTextView;
     private WearableListView listview;
-    private MainRecyclerAdapter mAdapter;
+    private MainAdapter mAdapter;
+
+    String[] elements = {"List Item 1", "List Item 2", "List Item 3"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +29,14 @@ public class MainActivity extends Activity {
             }
         });
 
-        new Thread(new ControlSendingThread(getApplicationContext())).start();
+        //new Thread(new ControlSendingThread(getApplicationContext())).start();
     }
 
     private void initView(WatchViewStub stub) {
         mTextView = (TextView) stub.findViewById(R.id.text);
         listview = (WearableListView) stub.findViewById(R.id.main_listview);
 
-        ArrayList<String> items = new ArrayList<>();
-        items.add("Test1");
-        items.add("Test2");
-        items.add("Test3");
-        mAdapter = new MainRecyclerAdapter(items, getBaseContext());
+        mAdapter = new MainAdapter(getBaseContext(), elements);
 
         listview.setAdapter(mAdapter);
     }
