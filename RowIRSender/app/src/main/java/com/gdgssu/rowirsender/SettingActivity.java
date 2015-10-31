@@ -6,19 +6,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.gdgssu.rowirsender.model.AllPersonItems;
-import com.gdgssu.rowirsender.model.Person;
+import com.lge.hardware.IRBlaster.Device;
 import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
-
-import com.google.gson.Gson;
 
 public class SettingActivity extends Activity {
 
     private IRBlaster mIR;
     private Handler mHandler;
     private boolean mIR_ready = false;
+    private Device[] mDevices;
+
+    private TextView mDeviceList;
+
     private IRBlasterCallback mIrBlasterReadyCallBack = new IRBlasterCallback() {
         @Override
         public void IRBlasterReady() {
@@ -26,7 +28,10 @@ public class SettingActivity extends Activity {
 
             final Runnable r = new Runnable() {
                 public void run() {
-                    mIR.getDevices();
+                    mDevices = mIR.getDevices();
+                    for(Device i: mDevices){
+                        mDeviceList.append(i.Name+'\n');
+                    }
                 }
             };
             mHandler.post(r);
@@ -55,7 +60,9 @@ public class SettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        initView();
         mHandler = new Handler();
+
 
         if (IRBlaster.isSdkSupported(getApplicationContext())) {
             mIR = IRBlaster.getIRBlaster(this, mIrBlasterReadyCallBack);
@@ -74,5 +81,10 @@ public class SettingActivity extends Activity {
                     result = mIR.addDevice();
             }
         });
+    }
+
+    private void initView() {
+        mDeviceList = (TextView) findViewById(R.id.tv_setting_devicelist);
+
     }
 }
