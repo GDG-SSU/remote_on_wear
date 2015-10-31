@@ -1,9 +1,7 @@
 package com.gdgssu.rowirsender;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +11,8 @@ import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
 
 public class SettingActivity extends Activity {
+
+    private final String TAG = SettingActivity.class.getSimpleName();
 
     private IRBlaster mIR;
     private Handler mHandler;
@@ -38,7 +38,7 @@ public class SettingActivity extends Activity {
 
         @Override
         public void newDeviceId(int i) {
-
+            Log.i(TAG, i+"");
         }
 
         @Override
@@ -68,7 +68,7 @@ public class SettingActivity extends Activity {
             public void onClick(View v) {
                 // 디바이스를 추가하는 Activity로 Intent를 발생시키는 SDK 함수
                 int result;
-                if(mIR_ready == true && mIR != null)
+                if (mIR_ready == true && mIR != null)
                     result = mIR.addDevice();
             }
         });
