@@ -2,6 +2,7 @@ package com.gdgssu.rowirsender;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class RowIRService extends Service implements SocketReceiveListener {
 
     private IRBlaster mIR;
     private DevicePreferenceHelper prefHelper;
+    private Handler mHandler;
 
     private boolean mIR_ready = false;
     private List<Device> deviceList = null;
@@ -35,6 +37,8 @@ public class RowIRService extends Service implements SocketReceiveListener {
         Log.i(TAG, "onStartCommand");
 
         initInstance();
+
+        mHandler = new Handler();
 
         if (mIR != null) {
             deviceList = Arrays.asList(mIR.getDevices());
@@ -66,10 +70,18 @@ public class RowIRService extends Service implements SocketReceiveListener {
         DeviceControlInfo deviceControlInfo = DeviceInfoParser.parsedInfo(message);
 
         int controlFunctionCode = deviceControlInfo.getFunctionKeyCode(deviceList, deviceControlInfo.getFunctionName());
-
         if (controlFunctionCode != -1) {
             mIR.sendIR(new IRAction(deviceControlInfo.getDeviceId(), controlFunctionCode, 0));
         }
+
+        Runnable post = new Runnable() {
+            @Override
+            public void run() {
+                mIR.stopIR();
+            }
+        };
+
+        mHandler.postDelayed(post,1000);    // Stop IR Send
     }
 
     private IRBlasterCallback mIrBlasterReadyCallback = new IRBlasterCallback() {
