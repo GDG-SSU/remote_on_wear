@@ -1,16 +1,18 @@
 package com.gdgssu.rowirsender;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.gdgssu.rowirsender.model.AllPersonItems;
+import com.gdgssu.rowirsender.model.Person;
 import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
+
+import com.google.gson.Gson;
 
 public class SettingActivity extends Activity {
 
@@ -70,7 +72,6 @@ public class SettingActivity extends Activity {
                 int result;
                 if(mIR_ready == true && mIR != null)
                     result = mIR.addDevice();
-                Log.i("TAG",JsonFromFile.readJsonFromAssets("data.json",getApplicationContext()));
             }
         });
     }
