@@ -12,10 +12,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.gdgssu.rowclient.model.AllPersonItems;
 import com.gdgssu.rowclient.model.Person;
+import com.gdgssu.rowclient.model.Program;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +36,29 @@ public class MainActivity extends AppCompatActivity {
 
         String json = JsonFromFile.readJsonFromAssets("data.json", getBaseContext());
         Gson gson = new Gson();
-        Person person = gson.fromJson(json, Person.class);
+        AllPersonItems data = gson.fromJson(json, AllPersonItems.class);
+
+        ArrayList<Person> person = data.persons;
+        ArrayList<Program> programArrayList = new ArrayList<>();
+        for(int i=0; i<person.size(); i++){
+            ArrayList<Program> programs = person.get(i).person_sche;
+            for(int j=0; j<programs.size(); j++){
+                Program program = programs.get(j);
+                programArrayList.add(program);
+            }
+        }
+        Collections.sort(programArrayList, new Comparator<Program>() {
+            @Override
+            public int compare(Program lhs, Program rhs) {
+                if(lhs.date.compareTo(rhs.date) < 0)
+                    return -1;
+                return 1;
+            }
+        });
+
+        for(int i=0; i<programArrayList.size(); i++){
+            Log.i("gsg",programArrayList.get(i).date);
+        }
 
         shotnoti.setOnClickListener(new View.OnClickListener() {
             @Override
