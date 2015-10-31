@@ -12,6 +12,7 @@ import com.lge.hardware.IRBlaster.Device;
 import com.lge.hardware.IRBlaster.IRAction;
 import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
+import com.lge.hardware.IRBlaster.IRFunction;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -151,35 +152,6 @@ public class HttpServer extends Service {
                 StringTokenizer tokenizer = new StringTokenizer(requestMessage);
                 String arrParm[] = requestMessage.split(" ");
 
-                if("POST".equals(arrParm[0])){
-                    String message = "";
-                    final DataOutputStream finalOutputStream = outputStream;
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                finalOutputStream.writeBytes("Http/1.0 200 Document Follows \r\n");
-                                finalOutputStream.writeBytes("Content-Type: text/html \r\n");
-                                finalOutputStream.writeBytes("Content-Length: 0\r\n");
-                                finalOutputStream.writeBytes("\r\n");
-                                close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, 3000);
-                    for(int i=0; i<100; i++){
-                        //message = inFromClient.readLine();
-                        message = inFromClient.readLine();
-                        Log.i("HttpServer", message);
-                    }
-                    outputStream.writeBytes("Http/1.0 200 Document Follows \r\n");
-                    outputStream.writeBytes("Content-Type: text/html \r\n");
-                    outputStream.writeBytes("Content-Length: 0\r\n");
-                    outputStream.writeBytes("\r\n");
-                    close();
-                    return;
-                }
                 if (!"GET".equals(arrParm[0])) {
                     outputStream.writeBytes("HTTP/1.0 400 Bad Request Message \r\n");
                     outputStream.writeBytes("Connection: close\r\n");
@@ -213,7 +185,20 @@ public class HttpServer extends Service {
                             mIR.stopIR();
                         }
                     };
+
                     close();
+                }else if("/VoulmUp".equals(request)) {
+
+                }else if("/VoulmDown".equals(request)) {
+
+                }else if("/channel?".contains(request)) {
+
+                }else if("/TempUp".equals(request)) {
+                    AirCone(outputStream ,1);
+                }else if("/TempDown".equals(request)) {
+                    AirCone(outputStream, 2);
+                }else if("/AirConPower".equals(request)){
+                    AirCone(outputStream, 0);
                 }else{
                     outputStream.writeBytes("HTTP/1.0 400 Bad Request Message \r\n");
                     outputStream.writeBytes("Connection: close\r\n");
@@ -225,6 +210,24 @@ public class HttpServer extends Service {
                 e.printStackTrace();
                 Log.e("HttpServer", e.toString());
             }
+        }
+
+        private void AirCone(DataOutputStream outputStream, int code) throws IOException {
+            Device device = mDevices[0];
+            List<IRFunction> functions = device.KeyFunctions;
+            IRFunction function = functions.get(code);
+            mIR.sendIR(new IRAction(device.Id, function.Id, 0));
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIR.stopIR();
+                }
+            }, 1000);
+            outputStream.writeBytes("Http/1.0 200 Document Follows \r\n");
+            outputStream.writeBytes("Content-Type: text/html \r\n");
+            outputStream.writeBytes("Content-Length: 0\r\n");
+            outputStream.writeBytes("\r\n");
+            close();
         }
 
         private void close() throws IOException {
