@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.wearable.view.WearableListView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,15 +44,15 @@ public class WearableListItemLayout extends LinearLayout
         super.onFinishInflate();
         // These are defined in the layout file for list items
         // (see next section)
-        mCircle = (ImageView) findViewById(R.id.circle);
-        mName = (TextView) findViewById(R.id.name);
+        mCircle = (ImageView) findViewById(R.id.image);
+        mName = (TextView) findViewById(R.id.text);
     }
 
     @Override
     public void onCenterPosition(boolean animate) {
         mName.setAlpha(1f);
         ((GradientDrawable) mCircle.getDrawable()).setColor(mChosenCircleColor);
-
+        Log.d("tag","tag");
     }
 
     @Override

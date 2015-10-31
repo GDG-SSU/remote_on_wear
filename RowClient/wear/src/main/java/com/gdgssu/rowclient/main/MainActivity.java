@@ -2,20 +2,21 @@ package com.gdgssu.rowclient.main;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WearableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.gdgssu.rowclient.ControlSendingThread;
 import com.gdgssu.rowclient.R;
+import com.gdgssu.rowclient.model.Device;
 
-public class MainActivity extends Activity {
+import java.util.ArrayList;
 
-    private TextView mTextView;
+public class MainActivity extends Activity implements WearableListView.ClickListener {
+
     private WearableListView listview;
     private MainAdapter mAdapter;
-
-    String[] elements = {"List Item 1", "List Item 2", "List Item 3"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,26 @@ public class MainActivity extends Activity {
     }
 
     private void initView(WatchViewStub stub) {
-        mTextView = (TextView) stub.findViewById(R.id.text);
         listview = (WearableListView) stub.findViewById(R.id.main_listview);
 
-        mAdapter = new MainAdapter(getBaseContext(), elements);
+        ArrayList<Device> devices = new ArrayList<>();
+        devices.add(new Device("Aircon", ContextCompat.getDrawable(getBaseContext(), R.drawable.airc_on)));
+        devices.add(new Device("TV", ContextCompat.getDrawable(getBaseContext(), R.drawable.tv_on)));
+        devices.add(new Device("DVD", ContextCompat.getDrawable(getBaseContext(), R.drawable.dvd_on)));
+
+        mAdapter = new MainAdapter(getBaseContext(), devices);
 
         listview.setAdapter(mAdapter);
+        listview.setClickListener(this);
+    }
+
+    @Override
+    public void onClick(WearableListView.ViewHolder viewHolder) {
+        Toast.makeText(getBaseContext(), "test", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTopEmptyRegionClick() {
+
     }
 }
