@@ -1,6 +1,7 @@
 package com.gdgssu.rowclient.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.wearable.view.WatchViewStub;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.gdgssu.rowclient.R;
 import com.gdgssu.rowclient.model.Device;
+import com.gdgssu.rowclient.remote.RemoteActivity;
 
 import java.util.ArrayList;
 
@@ -22,7 +24,7 @@ public class MainActivity extends Activity implements WearableListView.ClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.main_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
@@ -49,7 +51,9 @@ public class MainActivity extends Activity implements WearableListView.ClickList
 
     @Override
     public void onClick(WearableListView.ViewHolder viewHolder) {
-        Toast.makeText(getBaseContext(), "test", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getBaseContext(), RemoteActivity.class);
+        intent.putExtra("remote", 1);
+        startActivity(intent);
     }
 
     @Override
