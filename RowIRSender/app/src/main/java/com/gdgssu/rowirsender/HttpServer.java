@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.lge.hardware.IRBlaster.Device;
+import com.lge.hardware.IRBlaster.IRAction;
 import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
 
@@ -19,6 +20,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -36,6 +39,7 @@ public class HttpServer extends Service {
     private boolean mIR_ready = false;
     private Device[] mDevices;
 
+    private List<Device> deviceList;
     private String deviceData;
 
     private TextView mDeviceList;
@@ -43,6 +47,7 @@ public class HttpServer extends Service {
     @Override
     public void onCreate() {
         mHandler = new Handler();
+        deviceList = new ArrayList<>();
 
         if (IRBlaster.isSdkSupported(getApplicationContext())) {
             mIR = IRBlaster.getIRBlaster(this, mIrBlasterReadyCallBack);
@@ -87,6 +92,7 @@ public class HttpServer extends Service {
                     deviceData="";
                     for (Device i : mDevices) {
                         deviceData = deviceData+ i.Name + "/\n";
+                        deviceList.add(i);
                     }
                 }
             };
@@ -136,10 +142,44 @@ public class HttpServer extends Service {
                 inFromClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 outputStream = new DataOutputStream(clientSocket.getOutputStream());
                 String requestMessage = inFromClient.readLine();
-                Log.i("HttpServer", requestMessage + "message");
+                if(requestMessage == null) {
+                    close();
+                    return;
+                }
+                Log.i("HttpServer", requestMessage);
+
                 StringTokenizer tokenizer = new StringTokenizer(requestMessage);
                 String arrParm[] = requestMessage.split(" ");
 
+                if("POST".equals(arrParm[0])){
+                    String message = "";
+                    final DataOutputStream finalOutputStream = outputStream;
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                finalOutputStream.writeBytes("Http/1.0 200 Document Follows \r\n");
+                                finalOutputStream.writeBytes("Content-Type: text/html \r\n");
+                                finalOutputStream.writeBytes("Content-Length: 0\r\n");
+                                finalOutputStream.writeBytes("\r\n");
+                                close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, 3000);
+                    for(int i=0; i<100; i++){
+                        //message = inFromClient.readLine();
+                        message = inFromClient.readLine();
+                        Log.i("HttpServer", message);
+                    }
+                    outputStream.writeBytes("Http/1.0 200 Document Follows \r\n");
+                    outputStream.writeBytes("Content-Type: text/html \r\n");
+                    outputStream.writeBytes("Content-Length: 0\r\n");
+                    outputStream.writeBytes("\r\n");
+                    close();
+                    return;
+                }
                 if (!"GET".equals(arrParm[0])) {
                     outputStream.writeBytes("HTTP/1.0 400 Bad Request Message \r\n");
                     outputStream.writeBytes("Connection: close\r\n");
@@ -156,6 +196,29 @@ public class HttpServer extends Service {
                     outputStream.writeBytes("Content-Length: " + deviceData.length() + "\r\n");
                     outputStream.writeBytes("\r\n");
                     outputStream.writeBytes(deviceData);
+                    close();
+                }else if("/action?".contains(arrParm[1])){
+                    String message = arrParm[1].substring(7);
+                    Log.i("HttpServer", message);
+                    DeviceControlInfo deviceControlInfo = DeviceInfoParser.parsedInfo(message);
+
+                    int controlFunctionCode = deviceControlInfo.getFunctionKeyCode(deviceList, deviceControlInfo.getFunctionName());
+                    if (controlFunctionCode != -1) {
+                        mIR.sendIR(new IRAction(deviceControlInfo.getDeviceId(), controlFunctionCode, 0));
+                    }
+
+                    Runnable post = new Runnable() {
+                        @Override
+                        public void run() {
+                            mIR.stopIR();
+                        }
+                    };
+                    close();
+                }else{
+                    outputStream.writeBytes("HTTP/1.0 400 Bad Request Message \r\n");
+                    outputStream.writeBytes("Connection: close\r\n");
+                    outputStream.writeBytes("\r\n");
+                    Log.e("HttpServer", "Other Request");
                     close();
                 }
             } catch (IOException e) {
