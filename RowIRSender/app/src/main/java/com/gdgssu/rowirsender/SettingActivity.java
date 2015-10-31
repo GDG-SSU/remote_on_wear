@@ -2,6 +2,7 @@ package com.gdgssu.rowirsender;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +15,20 @@ import com.lge.hardware.IRBlaster.IRBlasterCallback;
 public class SettingActivity extends Activity {
 
     private IRBlaster mIR;
+    private Handler mHandler;
+    private boolean mIR_ready = false;
     private IRBlasterCallback mIrBlasterReadyCallBack = new IRBlasterCallback() {
         @Override
         public void IRBlasterReady() {
+            Log.d("IRBlaster", "IRBlaster is really ready");
 
+            final Runnable r = new Runnable() {
+                public void run() {
+                    mIR.getDevices();
+                }
+            };
+            mHandler.post(r);
+            mIR_ready = true;
         }
 
         @Override
@@ -42,8 +53,10 @@ public class SettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        mHandler = new Handler();
+
         if (IRBlaster.isSdkSupported(getApplicationContext())) {
-            mIR = IRBlaster.getIRBlaster(getApplicationContext(), mIrBlasterReadyCallBack);
+            mIR = IRBlaster.getIRBlaster(this, mIrBlasterReadyCallBack);
         } else {
             Log.e("TAG", "sdk not supported IR");
         }
@@ -55,10 +68,8 @@ public class SettingActivity extends Activity {
             public void onClick(View v) {
                 // 디바이스를 추가하는 Activity로 Intent를 발생시키는 SDK 함수
                 int result;
-                    //result = mIR.addDevice();
-                Intent e = new Intent("com.lge.qremote.intent.action.ADD_DEVICE");
-                e.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getBaseContext().startActivity(e);
+                if(mIR_ready == true && mIR != null)
+                    result = mIR.addDevice();
             }
         });
     }
