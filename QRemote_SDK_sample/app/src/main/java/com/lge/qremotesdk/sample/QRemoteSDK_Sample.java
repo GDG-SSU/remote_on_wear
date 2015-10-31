@@ -518,7 +518,7 @@ public class QRemoteSDK_Sample extends Activity {
 		}
 
 		if ((mFunctionNames != null) && (mFunctionNames.length > 0)) {
-			for (IRFunction function: mDeviceSelected.KeyFunctions) {
+			for (IRFunction function: IRAction.KeyFunctions) {
 
 				if (function.Name.equalsIgnoreCase(funcLabel)) {
 					return function.Id;

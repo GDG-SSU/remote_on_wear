@@ -9,8 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.lge.hardware.IRBlaster.Device;
+import com.lge.hardware.IRBlaster.IRAction;
 import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
+import com.lge.hardware.IRBlaster.IRFunction;
+
+import java.util.List;
 
 public class SettingActivity extends Activity {
 
@@ -81,6 +85,28 @@ public class SettingActivity extends Activity {
                 int result;
                 if (mIR_ready == true && mIR != null)
                     result = mIR.addDevice();
+            }
+        });
+        //Todo delete
+        Button testButton = (Button) findViewById(R.id.button);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Device device = mDevices[0];
+                List<IRFunction> functions = device.KeyFunctions;
+                IRFunction function = functions.get(0);
+                for(IRFunction f : functions){
+                    Log.i("function", f.Name);
+                }
+
+                mIR.sendIR(new IRAction(device.Id, function.Id,0));
+            }
+        });
+        Button stop = (Button) findViewById(R.id.button2);
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mIR.stopIR();
             }
         });
     }
