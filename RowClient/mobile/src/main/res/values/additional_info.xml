@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="smartbulletin_provider_default_activity">com.gdgssu.rowclient/com.gdgssu.rowclient.MainActivity</string>
+</resources>

@@ -21,6 +21,15 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+        <receiver android:name=".Bulletin" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/bulletin_info" />
+        </receiver>
     </application>
 
 </manifest>
