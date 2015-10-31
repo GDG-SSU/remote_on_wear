@@ -4,22 +4,22 @@
       "person_name": "Fx",
       "person_sche": [
         {
-          "date": "2015.11.1 PM 11:55",
+          "date": "20151101 PM 11:55",
           "channel": "M.net",
           "body": "어송포유 시즌4 MC 엠버"
         },
         {
-          "date": "2015.11.6 PM 06:30",
+          "date": "20151106 PM 06:30",
           "channel": "KBS-2TV",
           "body": "뮤직뱅크"
         },
         {
-          "date": "2015.11.7 PM 03:50",
+          "date": "20151107 PM 03:50",
           "channel": "MBC-TV",
           "body": "쇼! 음악중심"
         },
         {
-          "date": "2015.11.8 PM 11:55",
+          "date": "20151108 PM 11:55",
           "channel": "KBS-2TV",
           "body": "인기가요"
         }
@@ -29,7 +29,7 @@
       "person_name": "여자친구",
       "person_sche": [
         {
-          "date":"2015.11.1 PM 6:00",
+          "date":"20151101 PM 06:00",
           "channel" : "SBS-TV",
           "body" : "런닝맨"
         }

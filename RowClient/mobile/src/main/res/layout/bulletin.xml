@@ -1,12 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin" android:background="#ff50cdf5">
+    android:padding="@dimen/widget_margin" android:background="#ffffff"
+    android:orientation="vertical">
 
     <TextView android:id="@+id/appwidget_text" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" android:text="@string/appwidget_text"
-        android:textColor="#ffffff" android:textSize="24sp" android:textStyle="bold|italic"
-        android:layout_margin="8dp" android:contentDescription="@string/appwidget_text"
-        android:background="#ff50cdf5" />
+        android:layout_height="wrap_content"
+        android:text="채널을 변경해보세요!"
+        android:textColor="#6d005e" android:textSize="22sp" android:textStyle="bold"
+        android:background="#ffffff"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="7dp"/>
 
-</RelativeLayout>
+    <TextView android:id="@+id/appwidget_text2" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10분 후 M.net(ch.23) - 아이돌 대백과에서"
+        android:textColor="#ff008c" android:textSize="14sp" android:textStyle="bold"
+        android:background="#ffffff"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="11dp"/>
+
+    <TextView android:id="@+id/appwidget_text3" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="'여자친구' 특집을 합니다."
+        android:textColor="#ff008c" android:textSize="14sp" android:textStyle="bold"
+        android:background="#ffffff"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="3dp"/>
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/imageView"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:src="@drawable/gf" />
+
+</LinearLayout>
