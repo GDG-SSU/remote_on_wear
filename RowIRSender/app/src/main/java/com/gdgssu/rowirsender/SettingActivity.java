@@ -1,5 +1,7 @@
 package com.gdgssu.rowirsender;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +11,7 @@ import android.widget.Button;
 import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends Activity {
 
     private IRBlaster mIR;
     private IRBlasterCallback mIrBlasterReadyCallBack = new IRBlasterCallback() {
@@ -52,7 +54,11 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 디바이스를 추가하는 Activity로 Intent를 발생시키는 SDK 함수
-                int result = mIR.addDevice();
+                int result;
+                    //result = mIR.addDevice();
+                Intent e = new Intent("com.lge.qremote.intent.action.ADD_DEVICE");
+                e.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getBaseContext().startActivity(e);
             }
         });
     }
