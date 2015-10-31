@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.gdgssu.rowclient.R;
 
-/**
- * Created by lk on 15. 10. 31..
- */
 public class MainDeviceView extends FrameLayout implements WearableListView.OnCenterProximityListener {
 
     private ColorMatrix matrix;

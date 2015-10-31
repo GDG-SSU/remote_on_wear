@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startService(new Intent(getBaseContext(), ListenerService.class));
+
         Button shotnoti = (Button) findViewById(R.id.main_shotnoti);
 
         mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
