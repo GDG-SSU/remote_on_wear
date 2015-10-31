@@ -1,6 +1,7 @@
 package com.gdgssu.rowirsender;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,16 @@ import com.lge.hardware.IRBlaster.IRBlaster;
 import com.lge.hardware.IRBlaster.IRBlasterCallback;
 import com.lge.hardware.IRBlaster.IRFunction;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.List;
+import com.gdgssu.rowirsender.HttpServer;
 
 public class SettingActivity extends Activity {
 
@@ -70,6 +80,7 @@ public class SettingActivity extends Activity {
         mHandler = new Handler();
 
 
+
         if (IRBlaster.isSdkSupported(getApplicationContext())) {
             mIR = IRBlaster.getIRBlaster(this, mIrBlasterReadyCallBack);
         } else {
@@ -99,7 +110,7 @@ public class SettingActivity extends Activity {
                     Log.i("function", f.Name);
                 }
 
-                mIR.sendIR(new IRAction(device.Id, function.Id,0));
+                mIR.sendIR(new IRAction(device.Id, function.Id, 0));
             }
         });
         Button stop = (Button) findViewById(R.id.button2);
@@ -107,8 +118,13 @@ public class SettingActivity extends Activity {
             @Override
             public void onClick(View view) {
                 mIR.stopIR();
+
             }
         });
+
+        Intent intent = new Intent(this, HttpServer.class);
+        startService(intent);
+
     }
 
     private void initView() {
