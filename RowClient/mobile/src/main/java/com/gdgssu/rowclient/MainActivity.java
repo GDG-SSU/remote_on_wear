@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.gdgssu.rowclient.model.Person;
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
         mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
+        String json = JsonFromFile.readJsonFromAssets("data.json", getBaseContext());
+        Gson gson = new Gson();
+        Person person = gson.fromJson(json, Person.class);
+
         shotnoti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 builder.setContentTitle("Scheduled Notification");
                 builder.setContentText("Content");
                 builder.setSmallIcon(R.mipmap.ic_launcher);
-
 
                 Intent notificationIntent = new Intent(getBaseContext(), IUAlarmReceiver.class);
                 notificationIntent.putExtra(IUAlarmReceiver.NOTIFICATION_ID, 1);
