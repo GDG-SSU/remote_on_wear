@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,19 +43,30 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Program> programArrayList = new ArrayList<>();
         for(int i=0; i<person.size(); i++){
             ArrayList<Program> programs = person.get(i).person_sche;
+            String person_name = person.get(i).person_name;
             for(int j=0; j<programs.size(); j++){
                 Program program = programs.get(j);
+                program.person_name = person_name;
                 programArrayList.add(program);
             }
         }
         Collections.sort(programArrayList, new Comparator<Program>() {
             @Override
             public int compare(Program lhs, Program rhs) {
-                if(lhs.date.compareTo(rhs.date) < 0)
+                if (lhs.date.compareTo(rhs.date) < 0)
                     return -1;
                 return 1;
             }
         });
+        Program p1 = programArrayList.get(0);
+        SharedPreferences sharedPreferences = getSharedPreferences("pref",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("person", p1.person_name);
+        editor.putString("channel", p1.channel);
+        editor.putString("body", p1.body);
+        editor.putString("date", p1.date);
+        editor.commit();
+
 
         for(int i=0; i<programArrayList.size(); i++){
             Log.i("gsg",programArrayList.get(i).date);
@@ -79,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(2015, Calendar.OCTOBER, 31, 4, 15);
                 calendar.set(Calendar.AM_PM, Calendar.PM);
                 long futureInMillis = calendar.getTimeInMillis();
-                AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
             }
         });
