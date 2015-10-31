@@ -70,6 +70,7 @@ public class SettingActivity extends Activity {
                 int result;
                 if(mIR_ready == true && mIR != null)
                     result = mIR.addDevice();
+                Log.i("TAG",JsonFromFile.readJsonFromAssets("data.json",getApplicationContext()));
             }
         });
     }
