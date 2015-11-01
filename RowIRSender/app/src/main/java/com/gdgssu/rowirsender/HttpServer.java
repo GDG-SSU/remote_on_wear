@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lge.hardware.IRBlaster.Device;
 import com.lge.hardware.IRBlaster.IRAction;

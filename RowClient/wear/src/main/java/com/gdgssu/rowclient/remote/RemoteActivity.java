@@ -11,23 +11,19 @@ import com.gdgssu.rowclient.R;
 import com.gdgssu.rowclient.model.FuncEvent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.Wearable;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class RemoteActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = RemoteActivity.class.getSimpleName();
 
-    private AsyncHttpClient client = new AsyncHttpClient();
-    private static final String url = "";
-
     private GoogleApiClient mGoogleApiClient;
+    public static int remotestatic = -1;
 
 
     @Override
@@ -82,21 +78,24 @@ public class RemoteActivity extends Activity implements GoogleApiClient.Connecti
                 stub.findViewById(R.id.remote_aircon_up).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        sendFuncData("temp_up");
+                        sendFuncData();
+                        remotestatic = 0;
                     }
                 });
                 stub.findViewById(R.id.remote_aircon_down).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        sendFuncData("temp_down");
+                        sendFuncData();
+                        remotestatic = 1;
                     }
                 });
             }
         });
     }
 
-    private void sendFuncData(String data) {
-        new SendDataTask().execute(data);
+    private void sendFuncData() {
+
+        new SendDataTask().execute();
 
     }
 
@@ -119,20 +118,27 @@ public class RemoteActivity extends Activity implements GoogleApiClient.Connecti
 
     }
 
-    public class SendDataTask extends AsyncTask<String, Void, Void> {
+    public class SendDataTask extends AsyncTask<Void, Void, Void> {
+
 
         @Override
-        protected Void doInBackground(String[] objects) {
-            for (String data : objects) {
-                final PutDataMapRequest putDataMapRequest = PutDataMapRequest.create("/"+data);
-                if (mGoogleApiClient.isConnected()) {
-                    Wearable.DataApi.putDataItem(
-                            mGoogleApiClient, putDataMapRequest.asPutDataRequest()).await();
-                } else {
-                    Log.e(TAG, "Failed to send data item: " + putDataMapRequest
-                            + " - Client disconnected from Google Play Services");
-                }
+        protected Void doInBackground(Void... voids) {
+            mGoogleApiClient.blockingConnect(100, TimeUnit.MILLISECONDS);
+
+
+            final PutDataMapRequest putDataMapRequest = PutDataMapRequest.create("/func");
+            DataMap dataMap = putDataMapRequest.getDataMap();
+            dataMap.putInt("INT", remotestatic);
+
+            if (mGoogleApiClient.isConnected()) {
+                Log.d("Shot", "SHot");
+                Wearable.DataApi.putDataItem(
+                        mGoogleApiClient, putDataMapRequest.asPutDataRequest()).await();
+            } else {
+                Log.e(TAG, "Failed to send data item: " + putDataMapRequest
+                        + " - Client disconnected from Google Play Services");
             }
+
 
             return null;
         }
