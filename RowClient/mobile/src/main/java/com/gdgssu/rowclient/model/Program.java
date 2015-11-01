@@ -9,4 +9,5 @@ public class Program {
     public String date;
     public String channel;
     public String body;
+    public String person_name;
 }

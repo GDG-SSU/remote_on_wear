@@ -3,7 +3,14 @@ package com.gdgssu.rowclient;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
+
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Implementation of App Widget functionality.
@@ -33,9 +40,34 @@ public class Bulletin extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String date = pref.getString("date", "2015110118:00");
+        String person = pref.getString("person", "여자친구");
+        String channel = pref.getString("channel", "SBS");
+        String body = pref.getString("body", "런닝맨");
+
+        Calendar tempcal=Calendar.getInstance();
+        SimpleDateFormat sf=new SimpleDateFormat("yyyyMMddHH:mm");
+        Date startday=sf.parse(date, new ParsePosition(0));
+
+        long startTime=startday.getTime();
+
+        Calendar cal=Calendar.getInstance();
+        Date endDate=cal.getTime();
+        long endTime=endDate.getTime();
+
+        long mills=startTime-endTime;
+
+        //분으로 변환
+        long min=mills/60000;
+
+        StringBuffer diffTime=new StringBuffer();
+        diffTime.append(min);
+
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.bulletin);
+        views.setTextViewText(R.id.appwidget_text2, diffTime.toString() +"분 후 "+channel+" - " +body+"에서");
         //views.setTextViewText(R.id.appwidget_text, widgetText);
 
         // Instruct the widget manager to update the widget
